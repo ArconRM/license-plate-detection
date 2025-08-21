@@ -1,0 +1,5 @@
+train: data/yolo/images/train
+val: data/yolo/images/val
+test: data/yolo/images/test
+names:
+  0: license_plate
