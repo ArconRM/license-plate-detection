@@ -16,6 +16,7 @@ DATA_DIR = PROJ_ROOT / "data"
 RAW_DATA_DIR = DATA_DIR / "raw"
 PROCESSED_DATA_DIR = DATA_DIR / "processed"
 YOLO_DATA_DIR = DATA_DIR / "yolo"
+TEST_DATA_DIR = DATA_DIR / "test"
 
 MODELS_DIR = PROJ_ROOT / "models"
 
