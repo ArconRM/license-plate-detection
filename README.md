@@ -27,8 +27,6 @@ License plate detection with different models comparison.
 │
 ├── requirements.txt / requirements_yolo.txt   <- The requirements file for reproducing the analysis environment.
 │
-├── setup.cfg          <- Configuration file for flake8
-│
 └── license_plate_detection   <- Source code for use in this project.
     │
     ├── __init__.py             <- Makes license_plate_detection a Python module
