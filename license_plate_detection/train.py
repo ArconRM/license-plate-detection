@@ -1,3 +1,4 @@
+from click.core import batch
 from ultralytics import YOLO
 
 import os
@@ -6,7 +7,7 @@ from detectron2.config import get_cfg
 from detectron2 import model_zoo
 
 
-def train_yolo_model(model_path, data_path, epochs=20, img_size=768):
+def train_yolo_model(model_path, data_path, device, epochs=20, img_size=640, batch=1):
     """
     Train a YOLOv11 detection model with given parameters.
 
@@ -18,11 +19,15 @@ def train_yolo_model(model_path, data_path, epochs=20, img_size=768):
     """
     model = YOLO(model_path)
     model.train(
+        device=device,
         task='detect',
         mode='train',
         data=data_path,
         epochs=epochs,
-        imgsz=img_size
+        imgsz=img_size,
+        batch=batch,
+        amp=True,
+        verbose=False
     )
 
 

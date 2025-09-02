@@ -1,4 +1,6 @@
 import os, shutil
+import platform
+
 from ultralytics.data.converter import convert_coco
 
 from loguru import logger
@@ -17,6 +19,7 @@ def convert_coco_to_yolo(coco_ann_dir, yolo_base):
     # Copy images into YOLO directory
     src_img_dir = os.path.join(coco_ann_dir, "images")
     dst_img_dir = os.path.join(yolo_base, "images")
+    i_hate_windows = platform.system() == "Windows"
 
     for split in ["train", "val", "test"]:
         src_split_dir = os.path.join(src_img_dir, split)
@@ -24,7 +27,12 @@ def convert_coco_to_yolo(coco_ann_dir, yolo_base):
         os.makedirs(dst_split_dir, exist_ok=True)
 
         for fname in os.listdir(src_split_dir):
-            shutil.copy(os.path.join(src_split_dir, fname),
-                        os.path.join(dst_split_dir, fname))
+            if i_hate_windows:
+                long_src_path = r"\\?\\" + os.path.join(src_split_dir, fname)
+                long_dst_path = r"\\?\\" + os.path.join(dst_split_dir, fname)
+                shutil.copy(long_src_path, long_dst_path)
+            else:
+                shutil.copy(os.path.join(src_split_dir, fname),
+                            os.path.join(dst_split_dir, fname))
 
     logger.info("YOLO dataset ready at:", yolo_base)

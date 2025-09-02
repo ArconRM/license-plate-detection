@@ -7,15 +7,14 @@ from loguru import logger
 load_dotenv()
 
 # URLs
-DATASET_URL = "https://drive.google.com/uc?id=YOUR_FILE_ID"
+DATASET_URL = "https://drive.google.com/uc?id=1uO6IbRuaL2fKp3mQA1PYQFxU37CxvBzt"
 
 # Paths
-DATASET_PATH = "/path/to/dataset/zip"
-
 PROJ_ROOT = Path(__file__).resolve().parents[1]
 logger.info(f"PROJ_ROOT path is: {PROJ_ROOT}")
 
 DATA_DIR = PROJ_ROOT / "data"
+DATASET_ZIP_PATH = DATA_DIR / "zip" / "Detection.zip"
 RAW_DATA_DIR = DATA_DIR / "raw"
 PROCESSED_DATA_DIR = DATA_DIR / "processed"
 YOLO_DATA_DIR = DATA_DIR / "yolo"

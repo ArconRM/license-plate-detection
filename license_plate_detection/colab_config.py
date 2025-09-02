@@ -7,10 +7,10 @@ from loguru import logger
 load_dotenv()
 
 # Paths
-DATASET_PATH = "/content/drive/MyDrive/Detection.zip"
-
 PROJ_ROOT = Path("/content/license-plate-detection")
 logger.info(f"PROJ_ROOT path is: {PROJ_ROOT}")
+
+DATASET_DRIVE_PATH = "/content/drive/MyDrive/Detection.zip"
 
 DATA_DIR = PROJ_ROOT / "data"
 RAW_DATA_DIR = DATA_DIR / "raw"

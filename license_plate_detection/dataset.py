@@ -4,16 +4,22 @@ import random
 import shutil
 import gdown
 import zipfile
+import platform
+from pathlib import Path
 from tqdm import tqdm
 
 from loguru import logger
 
-def download_dataset(url, output_path="data/Detection.zip"):
+def download_dataset(url, output_path):
+    output_path = Path(output_path)
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
-    gdown.download(url, output_path, quiet=False)
+    gdown.download(url, str(output_path), quiet=False)
+    print("Downloaded file exists:", output_path.exists())
+    print("Downloaded size (bytes):", output_path.stat().st_size if output_path.exists() else "NOT FOUND")
 
 
 def unzip_dataset(zip_path, extract_to):
+    os.makedirs(extract_to, exist_ok=True)
     with zipfile.ZipFile(zip_path, 'r') as zf:
         names = zf.namelist()
         root = os.path.commonprefix(names).rstrip('/')
@@ -62,7 +68,8 @@ def process_coco_dataset(in_base, out_base, train_ratio=0.7, val_ratio=0.2, seed
     }
     
     os.makedirs(out_base, exist_ok=True)
-    
+    i_hate_windows = platform.system() == "Windows"
+
     for split, imgs in splits.items():
         # Filter annotations for this split
         img_ids = {img["id"] for img in imgs}
@@ -88,7 +95,13 @@ def process_coco_dataset(in_base, out_base, train_ratio=0.7, val_ratio=0.2, seed
             src = os.path.join(img_dir, img["file_name"])
             dst = os.path.join(split_img_dir, img["file_name"])
             if os.path.exists(src):
-                shutil.copy(src, dst)
+                if i_hate_windows:
+                    # i fucking hate Windows
+                    long_src_path = r"\\?\\" + src
+                    long_dst_path = r"\\?\\" + dst
+                    shutil.copy(long_src_path, long_dst_path)
+                else:
+                    shutil.copy(src, dst)
 
         logger.info(f"{split}: {len(imgs)} images, {len(split_json['annotations'])} annotations")
     
