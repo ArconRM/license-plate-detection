@@ -6,4 +6,5 @@ tqdm
 typer
 gdown
 opencv-python
+numpy
 matplotlib

@@ -190,3 +190,4 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+/notebooks/Yet-Another-EfficientDet-Pytorch/
