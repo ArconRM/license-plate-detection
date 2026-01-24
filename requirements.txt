@@ -8,3 +8,4 @@ gdown
 opencv-python
 numpy
 matplotlib
+torch
